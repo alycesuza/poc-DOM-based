@@ -46,6 +46,17 @@
                 document.getElementById('status').innerHTML = '<p class="error">Parâmetro de redirecionamento não encontrado.</p>';
             }
         }
+
+        // Verificar se o parâmetro de redirecionamento está presente na carga inicial
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+            if (redirectUrl) {
+                document.getElementById('status').innerHTML = '<p class="success">Parâmetro de redirecionamento encontrado: ' + redirectUrl + '</p>';
+            } else {
+                document.getElementById('status').innerHTML = '<p class="error">Parâmetro de redirecionamento não encontrado.</p>';
+            }
+        }
     </script>
 </body>
 </html>
